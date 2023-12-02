@@ -8,3 +8,5 @@ export function LoginPage() {
         </div>
     );
 }
+
+//проверка
