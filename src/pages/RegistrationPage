@@ -1,0 +1,12 @@
+import '../styles/css/App.css';
+import { Login } from "../modules/registration/Registration";
+
+export function RegistrationPage() {
+    return (
+        <div className="default">
+            <Registration />
+        </div>
+    );
+}
+
+//проверка
