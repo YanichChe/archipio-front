@@ -1,5 +1,5 @@
 import '../styles/css/App.css';
-import { Login } from "../modules/registration/Registration";
+import {Registration} from "../modules/registration/Registration";
 
 export function RegistrationPage() {
     return (
@@ -8,5 +8,3 @@ export function RegistrationPage() {
         </div>
     );
 }
-
-//проверка

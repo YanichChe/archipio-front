@@ -1,42 +1,36 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app-container {
+  height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+.content {
+  flex: 1; /* Это разделит доступное пространство между дочерними компонентами */
+  display: flex;
+  flex-direction: column; /* Столбцовая верстка */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+::-webkit-scrollbar {
+  width: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.normal {
+  font-style: normal;
+  font-variant: normal;
+}
+.small-caps {
+  font-variant: small-caps;
 }
 
 .default {
@@ -45,8 +39,8 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  position: relative;
   width: 100%;
+  position: relative;
 }
 
 small {
@@ -61,9 +55,8 @@ h1 {
 }
 
 .form {
-  position: relative;
+  padding: 20px;
   background: #FFFFFF;
-  padding: 45px;
   text-align: center;
   border-radius: 10px;
   width: 100%;
@@ -82,8 +75,9 @@ h1 {
 }
 
 .form .message {
-  margin: 15px 0 0;
   color: #b3b3b3;
+  margin-top: 10px;
+  margin-bottom: 0;
   font-size: 12px;
 }
 .form .message a {

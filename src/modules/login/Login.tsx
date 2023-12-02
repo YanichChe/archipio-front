@@ -6,7 +6,7 @@ export function Login() {
     const SecurityContainerStyled = styled.div`
       position: absolute;
       width: 540px;
-      height: 300px;
+      height: max-content;
       display: table-column;
       justify-content: center;
       align-items: center;

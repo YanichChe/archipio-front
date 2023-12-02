@@ -53,14 +53,14 @@ const Form = observer(() => {
             {passwordError && (
                 <p className="danger">{passwordError}</p>
             )}
-            <input type="password_confirm" placeholder="password_confirm" onChange={(event) => handleChange(event, setPasswordConfirm)}/>
+            <input type="password" placeholder="password confirm" onChange={(event) => handleChange(event, setPasswordConfirm)}/>
             {password_confirmError && (
                 <p className="danger">{password_confirmError}</p>
             )}
             <CButton
                 config={{
                     UIConfig: {variant: Variant.PRIMARY},
-                    text: 'Log in'
+                    text: 'Register'
                 }}
                 onClick={submit}/>
             <p className="message">Already registered? <a href="#">Log in</a></p>
