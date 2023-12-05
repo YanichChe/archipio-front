@@ -3,6 +3,7 @@ import {observer} from "mobx-react";
 import {CButton} from "../../components/button/CButton";
 import {Variant} from "../../styles/ts/types";
 import validate from "./RegistrationFormValidationRules";
+import AuthService from "../../services/AuthService";
 
 const Form = observer(() => {
 
@@ -34,6 +35,19 @@ const Form = observer(() => {
         setLoginError(validate(email, login, password, password_confirm).login);
         setPasswordError(validate(email, login, password, password_confirm).password);
         setPasswordConfirmError(validate(email, login, password, password_confirm).password_confirm);
+
+        if (emailError === '' && loginError === '' && passwordError === '') {
+            AuthService.register(login, email, password)
+                .then(response => {
+                    window.location.assign("http://localhost:3000/email-consider")
+
+                    }
+                )
+                .catch(error => {
+                    console.error('Ошибка при получении данных:', error);
+                })
+            return;
+        }
         console.log("meow")
     }
 
