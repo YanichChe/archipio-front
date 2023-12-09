@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+// @ts-ignore
 import {observer} from "mobx-react";
 import {CButton} from "../../components/button/CButton";
 import {Variant} from "../../styles/ts/types";
@@ -39,7 +40,7 @@ const Form = observer(() => {
         if (emailError === '' && loginError === '' && passwordError === '') {
             AuthService.register(login, email, password)
                 .then(response => {
-                    window.location.assign("http://localhost:3000/email-consider")
+                    window.location.assign("http://localhost:8080/email-consider")
 
                     }
                 )
@@ -77,7 +78,7 @@ const Form = observer(() => {
                     text: 'Register'
                 }}
                 onClick={submit}/>
-            <p className="message">Already registered? <a href="#">Log in</a></p>
+            <p className="message">Already registered? <a href="../login">Log in</a></p>
 
         </div>
 
