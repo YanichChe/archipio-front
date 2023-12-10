@@ -11,8 +11,8 @@ const Form = observer(() => {
 
         const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        console.log("meow");
         setModalOpen(true);
+        console.log("meow");
     }
 
     return (
@@ -23,7 +23,7 @@ const Form = observer(() => {
                     text: 'Log out'
                 }}
                 onClick={submit} />
-            <Logout isOpen={modalOpen} onClose={() => setModalOpen(false)} /> {/* Использовать компонент Logout */}
+            <Logout isOpen={modalOpen} onClose={() => setModalOpen(false)} /> {}
         </div>
     );
 });
