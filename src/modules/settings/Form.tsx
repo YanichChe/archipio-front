@@ -9,7 +9,7 @@ import AuthService from "../../services/AuthService";
 const Form = observer(() => {
     const [modalOpen, setModalOpen] = useState(false);
 
-        const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setModalOpen(true);
         console.log("meow");
