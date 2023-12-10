@@ -33,6 +33,7 @@ export const StyledButton = styled.button<{ config: CButtonUIConfig }>`
   padding: 14px 18px;
   width: 221px;
   margin-top: 20px;
+  margin-right: 10px;
   border-radius: 10px;
   border: none; /* Optional: Remove default button border */
   cursor: pointer;
