@@ -7,7 +7,7 @@ import Logout from "../logout/Logout";
 import AuthService from "../../services/AuthService";
 import ProfileService from "../../API/ProfileService";
 
-const Form = observer((props: { location: unknown; }) => {
+const Form = observer(() => {
     const [modalOpen, setModalOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState("");
