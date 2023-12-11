@@ -17,8 +17,8 @@ const Logout: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     }
 
     return (
-        <div className="modal">
-            <div className="modal-content">
+        <div className="shadow">
+            <div className="logout-content">
                 <span className="close" onClick={onClose}>&times;</span>
                 <h3>Вы действительно хотите выйти? </h3>
                 <CButton
