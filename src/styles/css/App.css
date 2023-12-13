@@ -174,3 +174,128 @@ p {
 main {
   text-align: center;
 }
+
+.project-content {
+  background-color: #fff;
+  border-radius: 5px;
+  text-align: center;
+  position: absolute;
+  left: 10%;
+  top: 15%;
+  right: 15%;
+  bottom: 15%;
+
+  display: block;
+  justify-content: center;
+}
+
+aside {
+  width: 40%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding: 0; /* чтобы содержимое не прилипало к границам aside */
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 0;
+}
+
+.editor-wrapper {
+  position: relative;
+}
+
+.save-button {
+  position: absolute;
+  bottom: 10px; /* располагаем кнопку внизу */
+  right: 10px; /* располагаем кнопку справа */
+  z-index: 1; /* чтобы кнопка оказалась поверх изображения */
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-info input[type="text"] {
+  left: 13.1%;
+  margin-bottom: 10px;
+}
+
+.project-info p{
+  text-align: left;
+  transform: translateX(43.5%);
+}
+
+.tr {
+  font-size: 25px;
+}
+
+.desc{
+  color: #6d6e6e;
+}
+
+.project-info .description {
+  flex-direction: column;
+}
+
+.name input {
+  transform: translateX(28%);
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  width: 40%;
+  box-sizing: border-box;
+  font-size: 27px;
+  position: relative;
+  border: 0;
+  margin-top: 10px;
+}
+
+.description textarea {
+  resize: none;
+  transform: translateX(38%);
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  width: 50%;
+  height: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  position: relative;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.placeholder {
+  background-color: #f2f2f2; /* серый цвет фона */
+  width: 520px; /* ширина блока */
+  height: 520px; /* высота блока */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #666; /* цвет текста */
+  font-size: 20px;
+  text-align: center;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  transform: translateX(43.5%);
+}
+
+.tag {
+  margin-right: 10px; /* добавляйте отступы между тегами по вашему желанию */
+  background-color: #FDA20B;
+  border-radius: 2px;
+}
+
+
