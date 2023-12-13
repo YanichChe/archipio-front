@@ -8,6 +8,7 @@ import AuthService from "../../services/AuthService";
 import dots from "../../assets/2.png"
 import Sidebar from "../sidebar/Sidebar";
 import ProfileService from "../../API/ProfileService";
+import ProjectCreate from "../project/create/ProjectCreate";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -15,7 +16,8 @@ const handleNavigate = () => {
 
 const Form = observer(() => {
     const [login, setLogin] = useState("");
-    const [modalOpen, setModalOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [projectCreateOpen, setProjectCreateOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,19 +30,24 @@ const Form = observer(() => {
         };
         fetchData();
     }, []);
-    const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const submitSidebar = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setModalOpen(true);
+        setSidebarOpen(true);
+    }
+
+    const submitProjectCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setProjectCreateOpen(true);
     }
 
     return (
 
         <div className="background">
             <header>
-                <button onClick={submit}>
+                <button onClick={submitSidebar}>
                     <img src={dots}></img>
                 </button>
-                <Sidebar isOpen={modalOpen} onClose={() => setModalOpen(false)} /> {}
+                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
             </header>
             <main>
                 <p>@{login}</p>
@@ -55,7 +62,8 @@ const Form = observer(() => {
                         UIConfig: {variant: Variant.PRIMARY},
                         text: 'Создать проект'
                     }}
-                    onClick={handleNavigate}/>
+                    onClick={submitProjectCreate}/>
+                <ProjectCreate isOpen={projectCreateOpen} onClose={() => setProjectCreateOpen(false)} /> {}
             </main>
         </div>
 
