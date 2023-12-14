@@ -18,6 +18,8 @@ const Form = observer(() => {
     const [login, setLogin] = useState("");
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState("myProjects");
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,6 +42,10 @@ const Form = observer(() => {
         setProjectCreateOpen(true);
     }
 
+    const openTab = (tabName: React.SetStateAction<string>) => {
+        setActiveTab(tabName);
+    };
+
     return (
 
         <div className="background">
@@ -49,9 +55,10 @@ const Form = observer(() => {
                 </button>
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
             </header>
-            <main>
+            <main className ="profileMain">
                 <p>@{login}</p>
-                <CButton
+                <p>
+                    <CButton
                     config={{
                         UIConfig: {variant: Variant.PRIMARY},
                         text: 'Изменить данные'
@@ -64,6 +71,33 @@ const Form = observer(() => {
                     }}
                     onClick={submitProjectCreate}/>
                 <ProjectCreate isOpen={projectCreateOpen} onClose={() => setProjectCreateOpen(false)} /> {}
+                </p>
+                    <div className="tab">
+                        <button
+                            className={activeTab === "myProjects" ? "tablinks active" : "tablinks"}
+                            onClick={() => openTab("myProjects")}
+                        >
+                            Мои проекты
+                        </button>
+                        <button
+                            className={activeTab === "favoriteProjects" ? "tablinks active" : "tablinks"}
+                            onClick={() => openTab("favoriteProjects")}
+                        >
+                            Понравившиеся проекты
+                        </button>
+                    </div>
+
+                    {activeTab === "myProjects" && (
+                        <div className="tabcontent">
+                            <h1>дима</h1>
+                        </div>
+                    )}
+
+                    {activeTab === "favoriteProjects" && (
+                        <div className="tabcontent">
+                            <h1>яна</h1>
+                        </div>
+                    )}
             </main>
         </div>
 
