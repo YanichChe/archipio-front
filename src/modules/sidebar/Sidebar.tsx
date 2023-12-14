@@ -1,6 +1,4 @@
-import React, {useState} from "react";
-import {Variant} from "../../styles/ts/types";
-import {CButton} from "../../components/button/CButton";
+import React, { useState } from "react";
 // @ts-ignore
 import icon from "../../assets/icon.png"
 import Logout from "../logout/Logout";

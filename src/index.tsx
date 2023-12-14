@@ -8,6 +8,7 @@ import { getRoutes } from "./routes";
 
 const routes = getRoutes();
 
+localStorage.setItem('isAuthenticated', 'false');
 ReactDOM.createRoot(document.querySelector('#root')!).render(
   <StrictMode>
       <Router>

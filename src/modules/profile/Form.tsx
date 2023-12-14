@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 // @ts-ignore
-import {observer} from "mobx-react";
-import {CButton} from "../../components/button/CButton";
-import {Variant} from "../../styles/ts/types";
+import { observer } from "mobx-react";
+import { CButton } from "../../components/button/CButton";
+import { Variant } from "../../styles/ts/types";
 import AuthService from "../../services/AuthService";
 // @ts-ignore
 import dots from "../../assets/2.png"
@@ -20,7 +20,7 @@ const Form = observer(() => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await ProfileService.GetMainImage(login);
+                const response = await ProfileService.getProfile();
                 setLogin(response.data.login);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);

@@ -38,7 +38,7 @@ export const StyledButton = styled.button<{ config: CButtonUIConfig }>`
   border: none; /* Optional: Remove default button border */
   cursor: pointer;
   outline: none; /* Remove outline on focus */
-  background: ${(props: { config: { variant: any; }; }) =>
+  background: ${(props) =>
           getColorByVariant(props.config?.variant || Variant.PRIMARY)};
   overflow: hidden;
 `;
@@ -46,7 +46,7 @@ export const StyledButton = styled.button<{ config: CButtonUIConfig }>`
 export const ButtonText = styled.div<{ config: CButtonUIConfig }>`
   position: relative;
   z-index: 1;
-  color: ${(props: { config: { variant: any; }; }) =>
+  color: ${(props) =>
          getAccentColorByVariant(props.config.variant || Variant.PRIMARY)};
   font-family: 'Inter', serif;
   font-size: 24px;

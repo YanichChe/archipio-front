@@ -1,5 +1,5 @@
 import '../styles/css/App.css';
-import {Registration} from "../modules/registration/Registration";
+import { Registration } from "../modules/registration/Registration";
 
 export function RegistrationPage() {
     return (

@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 // @ts-ignore
 import {observer} from "mobx-react";
 import {CButton} from "../../components/button/CButton";
 import {Variant} from "../../styles/ts/types";
 import validate from "./LoginFormValidationRules";
 import AuthService from "../../services/AuthService";
+import {authStore} from "../../store/AuthStore";
 
 const Form = observer(() => {
 
@@ -34,27 +35,29 @@ const Form = observer(() => {
         if (emailError === '' && passwordError === '') {
             AuthService.login(email, password)
                 .then(response => {
-                    console.log('okey');
+
+                    authStore.login();
+                    localStorage.setItem('accessToken', response.data.accessToken);
+                    localStorage.setItem('refreshToken', response.data.refreshToken);
+
+                    window.location.assign('http://localhost:3000/settings');
 
                 })
                 .catch(error => {
                     console.error('Ошибка при получении данных:', error);
+                    console.log(authStore.isAuthenticated)
                 })
         }
-
-        console.log("meow")
     }
 
     return (
-
-
         <div className="form">
-            <input type="text" placeholder="email" onChange={(event) => handleChange(event, setEmail)}/>
+            <input type="text" placeholder="email" onChange={ (event) => handleChange(event, setEmail) }/>
             {emailError && (
-                <p className="danger">{emailError}</p>
+                <p className="danger">{ emailError }</p>
             )}
             <input type="password" placeholder="password"
-                   onChange={(event) => handleChange(event, setPassword)}/>
+                   onChange={ (event) => handleChange(event, setPassword)}/>
             {passwordError && (
                 <p className="danger">{passwordError}</p>
             )}
@@ -63,7 +66,7 @@ const Form = observer(() => {
                     UIConfig: {variant: Variant.PRIMARY},
                     text: 'Log in'
                 }}
-                onClick={submit}/>
+                onClick={ submit }/>
             <p className="message">Not registered? <a href="../register">Create an account</a></p>
 
         </div>
