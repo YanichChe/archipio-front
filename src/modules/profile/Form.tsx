@@ -8,6 +8,7 @@ import AuthService from "../../services/AuthService";
 import dots from "../../assets/2.png"
 import Sidebar from "../sidebar/Sidebar";
 import ProfileService from "../../API/ProfileService";
+import ProjectCreate from "../project/create/ProjectCreate";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -15,7 +16,10 @@ const handleNavigate = () => {
 
 const Form = observer(() => {
     const [login, setLogin] = useState("");
-    const [modalOpen, setModalOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [projectCreateOpen, setProjectCreateOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState("myProjects");
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,23 +32,33 @@ const Form = observer(() => {
         };
         fetchData();
     }, []);
-    const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const submitSidebar = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setModalOpen(true);
+        setSidebarOpen(true);
     }
+
+    const submitProjectCreate = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setProjectCreateOpen(true);
+    }
+
+    const openTab = (tabName: React.SetStateAction<string>) => {
+        setActiveTab(tabName);
+    };
 
     return (
 
         <div className="background">
             <header>
-                <button onClick={submit}>
+                <button onClick={submitSidebar}>
                     <img src={dots}></img>
                 </button>
-                <Sidebar isOpen={modalOpen} onClose={() => setModalOpen(false)} /> {}
+                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
             </header>
-            <main>
+            <main className ="profileMain">
                 <p>@{login}</p>
-                <CButton
+                <p>
+                    <CButton
                     config={{
                         UIConfig: {variant: Variant.PRIMARY},
                         text: 'Изменить данные'
@@ -55,7 +69,35 @@ const Form = observer(() => {
                         UIConfig: {variant: Variant.PRIMARY},
                         text: 'Создать проект'
                     }}
-                    onClick={handleNavigate}/>
+                    onClick={submitProjectCreate}/>
+                <ProjectCreate isOpen={projectCreateOpen} onClose={() => setProjectCreateOpen(false)} /> {}
+                </p>
+                    <div className="tab">
+                        <button
+                            className={activeTab === "myProjects" ? "tablinks active" : "tablinks"}
+                            onClick={() => openTab("myProjects")}
+                        >
+                            Мои проекты
+                        </button>
+                        <button
+                            className={activeTab === "favoriteProjects" ? "tablinks active" : "tablinks"}
+                            onClick={() => openTab("favoriteProjects")}
+                        >
+                            Понравившиеся проекты
+                        </button>
+                    </div>
+
+                    {activeTab === "myProjects" && (
+                        <div className="tabcontent">
+                            <h1>дима</h1>
+                        </div>
+                    )}
+
+                    {activeTab === "favoriteProjects" && (
+                        <div className="tabcontent">
+                            <h1>яна</h1>
+                        </div>
+                    )}
             </main>
         </div>
 

@@ -6,15 +6,23 @@ import { Variant } from "../../styles/ts/types";
 import Logout from "../logout/Logout";
 import AuthService from "../../services/AuthService";
 import ProfileService from "../../API/ProfileService";
+// @ts-ignore
+import dots from "../../assets/2.png";
+import Sidebar from "../sidebar/Sidebar";
+import LoginChange from "../changes/login/LoginChange";
 
 const Form = observer(() => {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [logoutOpen, setLogoutOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState("");
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [loginChangeOpen, setLoginChangeOpen] = useState(false);
+
 
     const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setModalOpen(true);
+        setLogoutOpen(true);
+        console.log("meow");
     }
 
     useEffect(() => {
@@ -31,18 +39,37 @@ const Form = observer(() => {
         fetchData();
     }, []);
 
+    const submitSidebar = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setSidebarOpen(true);
+    }
+
+    const submitLoginChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setLoginChangeOpen(true);
+    }
 
     return (
-        <div className="form">
-            <p>Email: {email}</p>
-            <p>Login: {login}</p>
-            <CButton
-                config={{
-                    UIConfig: { variant: Variant.PRIMARY },
-                    text: 'Log out'
-                }}
-                onClick={submit} />
-            <Logout isOpen={modalOpen} onClose={() => setModalOpen(false)} /> {}
+        <div>
+            <header>
+                <button onClick={submitSidebar}>
+                    <img src={dots}></img>
+                </button>
+                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+            </header>
+            <div className="formSettings">
+                <p>Email: {email}</p>
+                <p>Login: {login} <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitLoginChange}> Изменить</span>
+                </p>
+                <LoginChange isOpen={loginChangeOpen} onClose={() => setLoginChangeOpen(false)} /> {}
+                <CButton
+                    config={{
+                        UIConfig: { variant: Variant.PRIMARY },
+                        text: 'Log out'
+                    }}
+                    onClick={submit} />
+                <Logout isOpen={logoutOpen} onClose={() => setLogoutOpen(false)} />
+            </div>
         </div>
     );
 });
