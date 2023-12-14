@@ -51,11 +51,11 @@ const Form = observer(() => {
 
     return (
         <div>
-            <header className="header">
+            <header>
                 <button onClick={submitSidebar}>
                     <img src={dots}></img>
                 </button>
-                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
+                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
             </header>
             <div className="formSettings">
                 <p>Email: {email}</p>
@@ -68,7 +68,7 @@ const Form = observer(() => {
                         text: 'Log out'
                     }}
                     onClick={submit} />
-                <Logout isOpen={logoutOpen} onClose={() => setLogoutOpen(false)} /> {}
+                <Logout isOpen={logoutOpen} onClose={() => setLogoutOpen(false)} />
             </div>
         </div>
     );

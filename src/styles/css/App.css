@@ -134,6 +134,20 @@ h1 {
   padding: 20px;
 }
 
+.shadowSettings {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  padding: 100%;
+}
+
 .logout-content {
   background-color: #fff;
   padding: 20px;
@@ -167,6 +181,14 @@ h1 {
   position: absolute;
   top: 5px;
   right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.closeChange {
+  position: absolute;
+  top: 20px;
+  right: 25px;
   cursor: pointer;
   font-size: 20px;
 }
