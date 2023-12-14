@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 // @ts-ignore
-import {observer} from "mobx-react";
-import {CButton} from "../../components/button/CButton";
-import {Variant} from "../../styles/ts/types";
+import { observer } from "mobx-react";
+import { CButton } from "../../components/button/CButton";
+import { Variant } from "../../styles/ts/types";
 import validate from "./RegistrationFormValidationRules";
 import AuthService from "../../services/AuthService";
 

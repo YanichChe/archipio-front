@@ -1,11 +1,11 @@
 import axios from "axios";
+import { authStore } from "../store/AuthStore";
 
 export default class ProfileService {
-    static async GetMainImage(email, login) {
-        return await axios.get('/profile/get-main-image', {
-            params: {
-                email: email,
-                login: login
+    static async getProfile() {
+        return await axios.get('http://localhost:8080/profile/show', {
+            headers: {
+                'Authorization' : 'Bearer '+ authStore.accessToken
             }
         })
     }

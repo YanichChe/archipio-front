@@ -1,14 +1,16 @@
 import { makeAutoObservable } from "mobx";
 
 class AuthStore {
-    isAuthenticated = true;
+    isAuthenticated = localStorage.getItem('isAuthenticated')
+    accessToken = localStorage.getItem('accessToken');
+    refreshToken = localStorage.getItem('refreshToken');
 
     login = () => {
-        this.isAuthenticated = true;
+        localStorage.setItem('isAuthenticated', 'true');
     };
 
     logout = () => {
-        this.isAuthenticated = false;
+        localStorage.setItem('isAuthenticated', 'false');
     };
 
     constructor() {

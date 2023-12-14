@@ -1,5 +1,5 @@
 import '../styles/css/App.css';
-import {Settings} from "../modules/settings/Settings";
+import { Settings } from "../modules/settings/Settings";
 
 export function SettingsPage() {
     return (

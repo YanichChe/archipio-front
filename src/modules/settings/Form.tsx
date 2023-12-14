@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 // @ts-ignore
-import {observer} from "mobx-react";
-import {CButton} from "../../components/button/CButton";
-import {Variant} from "../../styles/ts/types";
+import { observer } from "mobx-react";
+import { CButton } from "../../components/button/CButton";
+import { Variant } from "../../styles/ts/types";
 import Logout from "../logout/Logout";
 import AuthService from "../../services/AuthService";
 import ProfileService from "../../API/ProfileService";
@@ -28,7 +28,7 @@ const Form = observer(() => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await ProfileService.GetMainImage(email, login);
+                const response = await ProfileService.getProfile();
                 // Получаем данные пользователя
                 setEmail(response.data.email);
                 setLogin(response.data.login);
