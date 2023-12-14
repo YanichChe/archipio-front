@@ -1,22 +1,23 @@
 // @ts-ignore
-import {Observer} from "mobx-react";
+import { Observer } from "mobx-react";
 import styled from "styled-components";
 import Form from "./Form";
 
-export function Registration() {
+export function Profile() {
     const SecurityContainerStyled = styled.div`
-      width: 540px;
-      height: max-content;
-      position: relative;
-      display: flex;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: table-column;
       justify-content: center;
+      align-items: center;
     `;
 
     return (
         <Observer>
             {() => (
                 <SecurityContainerStyled>
-                    <Form/>
+                    <Form />
                 </SecurityContainerStyled>
             )}
         </Observer>

@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+// @ts-ignore
 import {observer} from "mobx-react";
 import {CButton} from "../../components/button/CButton";
 import {Variant} from "../../styles/ts/types";
@@ -63,7 +64,7 @@ const Form = observer(() => {
                     text: 'Log in'
                 }}
                 onClick={submit}/>
-            <p className="message">Not registered? <a href="#">Create an account</a></p>
+            <p className="message">Not registered? <a href="../register">Create an account</a></p>
 
         </div>
 
