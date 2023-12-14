@@ -1,7 +1,7 @@
 import React from "react";
-import {Variant} from "../../styles/ts/types";
-import {CButton} from "../../components/button/CButton";
-import {authStore} from "../../store/AuthStore";
+import { Variant } from "../../styles/ts/types";
+import { CButton } from "../../components/button/CButton";
+import { authStore } from "../../store/AuthStore";
 
 interface ModalProps {
     isOpen: boolean;

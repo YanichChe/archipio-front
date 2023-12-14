@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import validate from "./ProjectCreateValidationRules";
 import AvatarEditor from "react-avatar-editor";
 import ProfileService from "../../../API/ProfileService";
 import AuthService from "../../../services/AuthService";
-import {Variant} from "../../../styles/ts/types";
-import {CButton} from "../../../components/button/CButton";
+import { Variant } from "../../../styles/ts/types";
+import { CButton } from "../../../components/button/CButton";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
-
 
 const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [image, setImage] = useState(null);
@@ -29,13 +28,13 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await ProfileService.GetMainImage(login);
+                const response = await ProfileService.getProfile();
                 setLogin(response.data.login);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
         };
-        fetchData();
+        fetchData().then(r => console.log('добавить обработку ошибок'));
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, setStateFunction: {

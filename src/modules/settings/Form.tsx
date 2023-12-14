@@ -22,7 +22,6 @@ const Form = observer(() => {
     const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setLogoutOpen(true);
-        console.log("meow");
     }
 
     useEffect(() => {

@@ -1,8 +1,9 @@
-import React, {useState} from "react";
-import {Variant} from "../../../styles/ts/types";
-import {CButton} from "../../../components/button/CButton";
+import React, { useState}  from "react";
+import { Variant } from "../../../styles/ts/types";
+import { CButton } from "../../../components/button/CButton";
 import validate from "./LoginChangeValidationRules";
 import AuthService from "../../../services/AuthService";
+import ProfileService from "../../../API/ProfileService";
 
 interface ModalProps {
     isOpen: boolean;
@@ -27,6 +28,10 @@ const LoginChange: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const submit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         setLoginError(validate(login).login);
+
+        if (loginError === '') {
+            ProfileService.editLogin(login).then(r => console.log('Сделать обработку ошибки'));
+        }
     }
 
     if (!isOpen) {

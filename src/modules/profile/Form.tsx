@@ -30,7 +30,7 @@ const Form = observer(() => {
                 console.error("Ошибка при получении данных пользователя", error);
             }
         };
-        fetchData();
+        fetchData().then(r => console.log('добавить обработку ошибок'));
     }, []);
     const submitSidebar = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();

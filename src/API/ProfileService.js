@@ -9,4 +9,32 @@ export default class ProfileService {
             }
         })
     }
+
+    static async editLogin(login) {
+        return await axios.put('http://localhost:8080/profile/edit/login', {
+            login: login,
+            headers: {
+                'Authorization' : 'Bearer '+ authStore.accessToken
+            }
+        })
+    }
+
+    static async editPassword(oldPassword, newPassword) {
+        return await axios.put('http://localhost:8080/profile/edit/password', {
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+            headers: {
+                'Authorization' : 'Bearer '+ authStore.accessToken
+            }
+        })
+    }
+
+    static async editMainImage(file) {
+        return await axios.put('http://localhost:8080/profile/edit/main-image', {
+            multipartFile: file,
+            headers: {
+                'Authorization' : 'Bearer '+ authStore.accessToken
+            }
+        })
+    }
 }
