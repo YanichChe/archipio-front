@@ -6,11 +6,15 @@ import {Variant} from "../../styles/ts/types";
 import Logout from "../logout/Logout";
 import AuthService from "../../services/AuthService";
 import ProfileService from "../../API/ProfileService";
+// @ts-ignore
+import dots from "../../assets/2.png";
+import Sidebar from "../sidebar/Sidebar";
 
 const Form = observer(() => {
     const [modalOpen, setModalOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState("");
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -32,18 +36,30 @@ const Form = observer(() => {
         fetchData();
     }, []);
 
+    const submitSidebar = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setSidebarOpen(true);
+    }
 
     return (
-        <div className="form">
-            <p>Email: {email}</p>
-            <p>Login: {login}</p>
-            <CButton
-                config={{
-                    UIConfig: { variant: Variant.PRIMARY },
-                    text: 'Log out'
-                }}
-                onClick={submit} />
-            <Logout isOpen={modalOpen} onClose={() => setModalOpen(false)} /> {}
+        <div>
+            <header className="headerSettings">
+                <button onClick={submitSidebar}>
+                    <img src={dots}></img>
+                </button>
+                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
+            </header>
+            <div className="formSettings">
+                <p>Email: {email}</p>
+                <p>Login: {login}</p>
+                <CButton
+                    config={{
+                        UIConfig: { variant: Variant.PRIMARY },
+                        text: 'Log out'
+                    }}
+                    onClick={submit} />
+                <Logout isOpen={modalOpen} onClose={() => setModalOpen(false)} /> {}
+            </div>
         </div>
     );
 });

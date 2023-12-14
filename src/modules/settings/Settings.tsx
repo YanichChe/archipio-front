@@ -9,8 +9,6 @@ export function Settings() {
       width: 540px;
       height: max-content;
       display: table-column;
-      justify-content: center;
-      align-items: center;
     `;
 
     return (
