@@ -9,16 +9,19 @@ import ProfileService from "../../API/ProfileService";
 // @ts-ignore
 import dots from "../../assets/2.png";
 import Sidebar from "../sidebar/Sidebar";
+import LoginChange from "../changes/login/LoginChange";
 
 const Form = observer(() => {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [logoutOpen, setLogoutOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState("");
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [loginChangeOpen, setLoginChangeOpen] = useState(false);
+
 
     const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setModalOpen(true);
+        setLogoutOpen(true);
         console.log("meow");
     }
 
@@ -41,9 +44,14 @@ const Form = observer(() => {
         setSidebarOpen(true);
     }
 
+    const submitLoginChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setLoginChangeOpen(true);
+    }
+
     return (
         <div>
-            <header className="headerSettings">
+            <header className="header">
                 <button onClick={submitSidebar}>
                     <img src={dots}></img>
                 </button>
@@ -51,14 +59,16 @@ const Form = observer(() => {
             </header>
             <div className="formSettings">
                 <p>Email: {email}</p>
-                <p>Login: {login}</p>
+                <p>Login: {login} <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitLoginChange}> Изменить</span>
+                </p>
+                <LoginChange isOpen={loginChangeOpen} onClose={() => setLoginChangeOpen(false)} /> {}
                 <CButton
                     config={{
                         UIConfig: { variant: Variant.PRIMARY },
                         text: 'Log out'
                     }}
                     onClick={submit} />
-                <Logout isOpen={modalOpen} onClose={() => setModalOpen(false)} /> {}
+                <Logout isOpen={logoutOpen} onClose={() => setLogoutOpen(false)} /> {}
             </div>
         </div>
     );
