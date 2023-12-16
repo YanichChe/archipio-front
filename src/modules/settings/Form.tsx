@@ -48,8 +48,8 @@ const Form = observer(() => {
     }
 
     return (
-        <div>
-            <header>
+        <div className ="">
+            <header className="">
                 <button onClick={submitSidebar}>
                     <img src={dots}></img>
                 </button>

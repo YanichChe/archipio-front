@@ -41,8 +41,8 @@ const LoginChange: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     return (
         <div className="shadow">
-            <div className="change-content">
-                <span className="closeChange" onClick={onClose}>&times;</span>
+            <div className="logout-content">
+                <span className="close" onClick={onClose}>&times;</span>
                 <input type="text" placeholder="Введите новый логин" onChange={(event) => handleChange(event, setLogin)}/>
                 {loginError && (
                     <p className="danger">{loginError}</p>
