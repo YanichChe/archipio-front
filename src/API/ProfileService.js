@@ -1,5 +1,5 @@
 import axios from "axios";
-import {authStore} from "../store/AuthStore";
+import { authStore } from "../store/AuthStore";
 
 export default class ProfileService {
     static async getProfile() {
