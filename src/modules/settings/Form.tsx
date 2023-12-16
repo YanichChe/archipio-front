@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { CButton } from "../../components/button/CButton";
 import { Variant } from "../../styles/ts/types";
 import Logout from "../logout/Logout";
-import AuthService from "../../services/AuthService";
 import ProfileService from "../../API/ProfileService";
 // @ts-ignore
 import dots from "../../assets/2.png";

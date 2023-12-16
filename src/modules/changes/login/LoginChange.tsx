@@ -30,7 +30,7 @@ const LoginChange: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         setLoginError(validate(login).login);
 
         if (loginError === '') {
-            ProfileService.editLogin(login).then(r => console.log('Сделать обработку ошибки'))
+            ProfileService.editLogin(login).then(r => window.location.href = '../settings')
                 .catch(error => {console.log(error)});
         }
     }

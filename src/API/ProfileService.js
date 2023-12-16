@@ -1,22 +1,24 @@
 import axios from "axios";
-import { authStore } from "../store/AuthStore";
+import {authStore} from "../store/AuthStore";
 
 export default class ProfileService {
     static async getProfile() {
         return await axios.get('http://localhost:8080/profile/show', {
             headers: {
-                'Authorization' : 'Bearer '+ authStore.accessToken
+                'Authorization': 'Bearer ' + authStore.accessToken
             }
         })
     }
 
     static async editLogin(login) {
         return await axios.put('http://localhost:8080/profile/edit/login', {
-            login: login,
-            headers: {
-                'Authorization' : 'Bearer '+ authStore.accessToken
-            }
-        })
+                login: login,
+            },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + authStore.accessToken
+                }
+            })
     }
 
     static async editPassword(oldPassword, newPassword) {
@@ -24,7 +26,7 @@ export default class ProfileService {
             oldPassword: oldPassword,
             newPassword: newPassword,
             headers: {
-                'Authorization' : 'Bearer '+ authStore.accessToken
+                'Authorization': 'Bearer ' + authStore.accessToken
             }
         })
     }
@@ -33,7 +35,7 @@ export default class ProfileService {
         return await axios.put('http://localhost:8080/profile/edit/main-image', {
             multipartFile: file,
             headers: {
-                'Authorization' : 'Bearer '+ authStore.accessToken
+                'Authorization': 'Bearer ' + authStore.accessToken
             }
         })
     }
