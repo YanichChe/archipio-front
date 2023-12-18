@@ -21,6 +21,17 @@ export default class ProfileService {
             })
     }
 
+ static async editEmail(email) {
+        return await axios.put('http://localhost:8080/profile/edit/email', {
+                email: email,
+            },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + authStore.accessToken
+                }
+            })
+    }
+
     static async editPassword(oldPassword, newPassword) {
         return await axios.put('http://localhost:8080/profile/edit/password', {
             oldPassword: oldPassword,
