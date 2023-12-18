@@ -9,16 +9,23 @@ import ProfileService from "../../API/ProfileService";
 import dots from "../../assets/2.png";
 import Sidebar from "../sidebar/Sidebar";
 import LoginChange from "../changes/login/LoginChange";
+import EmailChange from "../changes/email/EmailChange";
+import PasswordChange from "../changes/password/PasswordChange";
+import ProfileDelete from "../delete/ProfileDelete";
 
 const Form = observer(() => {
     const [logoutOpen, setLogoutOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState("");
+    const [password, setPassword] = useState("");
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [loginChangeOpen, setLoginChangeOpen] = useState(false);
+    const [emailChangeOpen, setEmailChangeOpen] = useState(false);
+    const [passwordChangeOpen, setPasswordChangeOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
 
 
-    const submit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const submitLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setLogoutOpen(true);
     }
@@ -30,6 +37,7 @@ const Form = observer(() => {
                 // Получаем данные пользователя
                 setEmail(response.data.email);
                 setLogin(response.data.login);
+                //setPassword(response.data.password);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -47,6 +55,20 @@ const Form = observer(() => {
         setLoginChangeOpen(true);
     }
 
+    const submitEmailChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setEmailChangeOpen(true);
+    }
+
+    const submitPasswordChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setPasswordChangeOpen(true);
+    }
+
+    const openDelete = () => {
+        setDeleteOpen(true);
+    };
+
     return (
         <div className ="">
             <header className="">
@@ -56,17 +78,26 @@ const Form = observer(() => {
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
             </header>
             <div className="formSettings">
-                <p>Email: {email}</p>
-                <p>Login: {login} <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitLoginChange}> Изменить</span>
+                <p>Почта: {email}  <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitEmailChange}> Изменить</span>
+                </p>
+                <EmailChange isOpen={emailChangeOpen} onClose={() => setEmailChangeOpen(false)} /> {}
+                <p>Логин: {login} <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitLoginChange}> Изменить</span>
                 </p>
                 <LoginChange isOpen={loginChangeOpen} onClose={() => setLoginChangeOpen(false)} /> {}
+                <p>Пароль  <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitPasswordChange}> Изменить</span>
+                </p>
+                <PasswordChange isOpen={passwordChangeOpen} onClose={() => setPasswordChangeOpen(false)} /> {}
+                <p>
                 <CButton
                     config={{
                         UIConfig: { variant: Variant.PRIMARY },
                         text: 'Log out'
                     }}
-                    onClick={submit} />
+                    onClick={submitLogout} />
                 <Logout isOpen={logoutOpen} onClose={() => setLogoutOpen(false)} />
+                </p>
+                <p className="message" onClick={openDelete}>Удалить аккаунт </p>
+                <ProfileDelete isOpen={deleteOpen} onClose={() => setDeleteOpen(false)} /> {}
             </div>
         </div>
     );
