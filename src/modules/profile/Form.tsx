@@ -61,7 +61,7 @@ const Form = observer(() => {
                     <CButton
                     config={{
                         UIConfig: {variant: Variant.PRIMARY},
-                        text: 'Изменить данные'
+                        text: 'Настройки'
                     }}
                     onClick={handleNavigate}/>
                 <CButton
