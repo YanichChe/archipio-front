@@ -9,6 +9,7 @@ import dots from "../../assets/2.png"
 import Sidebar from "../sidebar/Sidebar";
 import ProfileService from "../../API/ProfileService";
 import ProjectCreate from "../project/create/ProjectCreate";
+import PictureService from "../../API/PictureService";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -16,16 +17,21 @@ const handleNavigate = () => {
 
 const Form = observer(() => {
     const [login, setLogin] = useState("");
+    const [uuid, setUuid] = useState("");
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("myProjects");
-
+    const [picture, setPicture] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await ProfileService.getProfile();
-                setLogin(response.data.login);
+                const responseLogin = await ProfileService.getProfile();
+                setLogin(responseLogin.data.login);
+                const responseUuid = await ProfileService.getProfile();
+                setUuid(responseUuid.data.uuid);
+                const responsePicture = await PictureService.getPicture(uuid);
+                setPicture(responsePicture.data);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -56,6 +62,7 @@ const Form = observer(() => {
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
             </header>
             <main className ="profileMain">
+                <p>{picture && <img src={picture} alt="Аватарка" width='50' height='50'/>}</p>
                 <p>@{login}</p>
                 <p>
                     <CButton
