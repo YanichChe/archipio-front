@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import validate from "./ProjectEditValidationRules";
 import AvatarEditor from "react-avatar-editor";
 import ProfileService from "../../../API/ProfileService";
-import AuthService from "../../../services/AuthService";
 import { Variant } from "../../../styles/ts/types";
 import { CButton } from "../../../components/button/CButton";
 import ProjectService from "../../../API/ProjectService";
@@ -24,6 +23,7 @@ const ProjectEdit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [type, setType] = useState("private");
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
+    const [tagsError, setTagsError] = useState("");
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState('');
     const [uuid, setUuid] = useState("");
@@ -42,7 +42,7 @@ const ProjectEdit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 setOwner(responseProject.data.owner);
                 setTags(responseProject.data.tags);
                 const responsePicture = await PictureService.getPicture(uuid);
-                setPicture(responsePicture.data);
+                setPicture(responsePicture.data.picture);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -97,8 +97,9 @@ const ProjectEdit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     const submit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        setNameError(validate(name, description).name);
-        setDescriptionError(validate(name, description).description);
+        setNameError(validate(name, description, tags).name);
+        setDescriptionError(validate(name, description, tags).description);
+        setTagsError(validate(name, description, tags).tags);
     }
 
     const handleAddTag = () => {
@@ -121,6 +122,12 @@ const ProjectEdit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         // @ts-ignore
         updatedTags[index] = newTag;
         setTags(updatedTags);
+    };
+
+    const handleDeleteTag = ({index}: { index: any }) => {
+        const newTags = [...tags];
+        newTags.splice(index, 1);
+        setTags(newTags);
     };
 
     if (!isOpen) {
@@ -156,7 +163,7 @@ const ProjectEdit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                         {nameError && (
                             <p className="danger">{nameError}</p>
                         )}
-                        <p className="tr">Автор: {login}</p>
+                        <p className="tr">Автор: {owner}</p>
                         <p className ="desc">Описание проекта:</p>
                         <div className="description" >
                             <textarea name="description" rows={12} value={description} onChange={(event) => handleChangeDescription(event, setDescription)}></textarea>
@@ -174,6 +181,7 @@ const ProjectEdit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                             handleEditTag({index: index, newTag: newTag});
                                         }
                                     }}>{tag}</span>
+                                    <span onClick={() => handleDeleteTag({index: index})}>✖</span>
                                 </div>
                             ))}
                             {tags.length < 5 && (
@@ -189,7 +197,9 @@ const ProjectEdit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             )}
                         </div>
-
+                        {tagsError && (
+                            <p className="danger">{tagsError}</p>
+                        )}
                     </div>
                 </main>
 

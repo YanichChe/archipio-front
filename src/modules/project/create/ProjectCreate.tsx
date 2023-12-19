@@ -22,6 +22,7 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [type, setType] = useState("private");
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
+    const [tagsError, setTagsError] = useState("");
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState('');
 
@@ -84,8 +85,9 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     const submit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        setNameError(validate(name, description).name);
-        setDescriptionError(validate(name, description).description);
+        setNameError(validate(name, description, tags).name);
+        setDescriptionError(validate(name, description, tags).description);
+        setTagsError(validate(name, description, tags).tags);
     }
 
     const handleAddTag = () => {
@@ -109,6 +111,13 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         updatedTags[index] = newTag;
         setTags(updatedTags);
     };
+
+    const handleDeleteTag = ({index}: { index: any }) => {
+        const newTags = [...tags];
+        newTags.splice(index, 1);
+        setTags(newTags);
+    };
+
 
     if (!isOpen) {
         return null;
@@ -161,6 +170,7 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                             handleEditTag({index: index, newTag: newTag});
                                         }
                                     }}>{tag}</span>
+                                    <span onClick={() => handleDeleteTag({index: index})}>✖</span>
                                 </div>
                             ))}
                             {tags.length < 5 && (
@@ -176,7 +186,9 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             )}
                         </div>
-
+                        {tagsError && (
+                            <p className="danger">{tagsError}</p>
+                        )}
                     </div>
                 </main>
 
