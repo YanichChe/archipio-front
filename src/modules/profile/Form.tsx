@@ -3,14 +3,12 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { CButton } from "../../components/button/CButton";
 import { Variant } from "../../styles/ts/types";
-import AuthService from "../../services/AuthService";
 // @ts-ignore
 import dots from "../../assets/2.png"
 import Sidebar from "../sidebar/Sidebar";
 import ProfileService from "../../API/ProfileService";
 import ProjectCreate from "../project/create/ProjectCreate";
 import PictureService from "../../API/PictureService";
-import ProjectOpen from "../project/open/ProjectOpen";
 import ProjectShow from "../project/show/ProjectShow";
 
 // @ts-ignore
@@ -106,13 +104,6 @@ const Form = observer(() => {
 
                     {activeTab === "myProjects" && (
                         <div className="tabcontent">
-                            <CButton
-                                config={{
-                                    UIConfig: {variant: Variant.PRIMARY},
-                                    text: 'Открыть проект'
-                                }}
-                                onClick={submitProjectOpen}/>
-                            <ProjectOpen isOpen={projectOpen} onClose={() => setProjectOpen(false)} /> {}
                             <ProjectShow/>
                             <ProjectShow/>
                         </div>
