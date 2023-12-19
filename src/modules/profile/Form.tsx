@@ -11,6 +11,10 @@ import ProfileService from "../../API/ProfileService";
 import ProjectCreate from "../project/create/ProjectCreate";
 import PictureService from "../../API/PictureService";
 import ProjectOpen from "../project/open/ProjectOpen";
+import ProjectShow from "../project/show/ProjectShow";
+
+// @ts-ignore
+import pic from "../../assets/mileycyrus.jpeg";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -109,12 +113,15 @@ const Form = observer(() => {
                                 }}
                                 onClick={submitProjectOpen}/>
                             <ProjectOpen isOpen={projectOpen} onClose={() => setProjectOpen(false)} /> {}
+                            <ProjectShow/>
+                            <ProjectShow/>
                         </div>
                     )}
 
                     {activeTab === "favoriteProjects" && (
                         <div className="tabcontent">
-                            <h1>яна</h1>
+                            <ProjectShow/>
+                            <ProjectShow/>
                         </div>
                     )}
             </main>

@@ -11,9 +11,12 @@ import fullHeart from "../../../assets/likedicon.png";
 import emptyHeart from "../../../assets/unikedIcon.png";
 // @ts-ignore
 import pic from "../../../assets/mileycyrus.jpeg";
+// @ts-ignore
+import pen from "../../../assets/pen.png";
 import ProjectDelete from "../../delete/ProjectDelete";
 import ProjectService from "../../../API/ProjectService";
 import PictureService from "../../../API/PictureService";
+import ProjectEdit from "../edit/ProjectEdit";
 
 interface ModalProps {
     isOpen: boolean;
@@ -22,11 +25,12 @@ interface ModalProps {
 
 const ProjectOpen: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [projectDeleteOpen, setProjectDeleteOpen] = useState(false);
+    const [projectEditOpen, setProjectEditOpen] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [uuid, setUuid] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [picture, setPicture] = useState(null);
+    const [picture, setPicture] = useState("");
     const [owner, setOwner] = useState("");
     const [tags, setTags] = useState([]);
 
@@ -41,7 +45,7 @@ const ProjectOpen: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 setOwner(responseProject.data.owner);
                 setTags(responseProject.data.tags);
                 const responsePicture = await PictureService.getPicture(uuid);
-                setPicture(responsePicture.data);
+                setPicture(responsePicture.data.picture);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -66,6 +70,11 @@ const ProjectOpen: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         setProjectDeleteOpen(true);
     }
 
+    const submitProjectEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setProjectEditOpen(true);
+    }
+
 
     if (!isOpen) {
         return null;
@@ -81,16 +90,17 @@ const ProjectOpen: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <div className="project-content">
                 <span className="close" onClick={onClose}>&times;</span>
                 <aside className="image-editor">
-                    <img src={pic} alt="фотография проекта"/>
+                    <img src={picture} alt="фотография проекта"/>
                 </aside>
                 <main className="project-info">
-                    <div className="name">
-                        {name.length}
+                    <div className="nameOpen">
+                        {name}
                     </div>
                     <p className="tr">Автор: {owner}</p>
                     <div className="descriptionOpen" style={{ wordWrap: 'break-word' }}>
                         {description}
                     </div>
+                    <div>
                     {tags.map((tag, index) => (
                         <div key={index} className="tag">
                             <span className="tag" key={index}>
@@ -98,10 +108,15 @@ const ProjectOpen: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             </span>
                         </div>
                     ))}
+                    </div>
                 </main>
 
                 <footer>
                     <div>
+                        <button className="pen-button" type="button" onClick={submitProjectEdit}>
+                            <img src={pen} alt="delete-icon" style={{ width: '50px', height: '50px' }} />
+                        </button>
+                        <ProjectEdit isOpen={projectEditOpen} onClose={() => setProjectEditOpen(false)} />
                         <button className="like-button" type="button" onClick={handleLike}>
                             <img
                                 src={isLiked ? fullHeart : emptyHeart}

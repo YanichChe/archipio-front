@@ -125,7 +125,7 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             ref={(e) => setEditor(e)}
                             image={image}
                             width={520}
-                            height={520}
+                            height={620}
                             border={0}
                             color={[255, 255, 255, 0.6]}
                             scale={1.2}

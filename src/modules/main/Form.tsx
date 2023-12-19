@@ -12,6 +12,7 @@ import Sidebar from "../sidebar/Sidebar";
 import ProfileService from "../../API/ProfileService";
 import ProjectCreate from "../project/create/ProjectCreate";
 import PictureService from "../../API/PictureService";
+import ProjectShow from "../project/show/ProjectShow";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -60,6 +61,11 @@ const Form = observer(() => {
                     <ProjectCreate isOpen={projectCreateOpen} onClose={() => setProjectCreateOpen(false)} />
                 </form>
             </nav>
+            <main className="tabcontent">
+                <ProjectShow/>
+                <ProjectShow/>
+
+            </main>
 
         </div>
 
