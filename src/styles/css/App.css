@@ -277,7 +277,7 @@ aside {
   left: 0;
   top: 0;
   bottom: 0;
-  padding: 0; /* чтобы содержимое не прилипало к границам aside */
+  padding: 0;
   border-radius: 5px;
   overflow: hidden;
   margin: 0;
@@ -425,9 +425,10 @@ aside {
 }
 
 .tabcontent {
-  display: block;
+  position: relative;
   padding: 6px 12px;
-  border-top: none;
+  border-top: 20px;
+  margin-bottom: 2000px;
 }
 
 .headerSettings {
@@ -465,7 +466,7 @@ aside {
   width: 42px;
   height: 42px;
   border: none;
-  background: #1c4154;
+  background: #1a3d4f;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
   box-sizing: border-box;
@@ -518,15 +519,57 @@ button img{
   z-index: 1000;
 }
 
+.pen-button{
+  position: relative;
+  left: 430px;
+  top: 10px;
+}
+
 .like-button{
   position: relative;
-  left: 470px;
+  left: 450px;
   top: 10px;
 }
 
 .delete-button{
   position: relative;
-  left: 490px;
+  left: 470px;
   top: 10px;
 }
 
+.projectShow{
+  width: 80%;
+  height: 260px;
+  border: 1px solid #575454;
+  border-radius: 5px;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.projectShowPicture{
+  height: 260px;
+  width: 360px;
+  border-radius: 5px;
+}
+
+.projectShowName{
+  font-size: 36px;
+  color: #1a3d4f;
+  width: 100px;
+  transform: translateX(1%);
+}
+
+.projectShowOwner{
+  width: 150px;
+  font-size: 28px;
+  transform: translateX(1%);
+}
+
+
+.projectShowDescription{
+  font-size: 14px;
+  width: 750px;
+  text-align: left;
+  color: #7b8285;
+  transform: translateX(1%);
+}
