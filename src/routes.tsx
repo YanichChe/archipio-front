@@ -1,9 +1,10 @@
-import { JSX } from "react";
+import React, { JSX } from "react";
 import { LoginPage } from "./pages/LoginPage";
 import { RegistrationPage } from "./pages/RegistrationPage";
 import { EmailConsiderPage } from "./pages/EmailConsiderPage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import { MainPage } from "./pages/MainPage";
 
 export type RouteType = {
     component: JSX.Element
@@ -40,6 +41,12 @@ export function getRoutes(): RouteType[] {
             component: <ProfilePage />,
             isProtected: true,
             path: '/user'
+        },
+
+        {
+            component: <MainPage />,
+            isProtected: true,
+            path: '/archipio'
         },
     ];
 }

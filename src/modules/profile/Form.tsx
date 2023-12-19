@@ -10,6 +10,7 @@ import Sidebar from "../sidebar/Sidebar";
 import ProfileService from "../../API/ProfileService";
 import ProjectCreate from "../project/create/ProjectCreate";
 import PictureService from "../../API/PictureService";
+import ProjectOpen from "../project/open/ProjectOpen";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -20,16 +21,16 @@ const Form = observer(() => {
     const [uuid, setUuid] = useState("");
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
+    const [projectOpen, setProjectOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("myProjects");
     const [picture, setPicture] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const responseLogin = await ProfileService.getProfile();
-                setLogin(responseLogin.data.login);
-                const responseUuid = await ProfileService.getProfile();
-                setUuid(responseUuid.data.uuid);
+                const responseProfile = await ProfileService.getProfile();
+                setLogin(responseProfile.data.login);
+                setUuid(responseProfile.data.uuid);
                 const responsePicture = await PictureService.getPicture(uuid);
                 setPicture(responsePicture.data);
             } catch (error) {
@@ -48,6 +49,11 @@ const Form = observer(() => {
         setProjectCreateOpen(true);
     }
 
+    const submitProjectOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setProjectOpen(true);
+    }
+
     const openTab = (tabName: React.SetStateAction<string>) => {
         setActiveTab(tabName);
     };
@@ -57,7 +63,7 @@ const Form = observer(() => {
         <div className="background">
             <header>
                 <button onClick={submitSidebar}>
-                    <img src={dots}></img>
+                    <img className="dots" src={dots}></img>
                 </button>
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
             </header>
@@ -96,7 +102,13 @@ const Form = observer(() => {
 
                     {activeTab === "myProjects" && (
                         <div className="tabcontent">
-                            <h1>дима</h1>
+                            <CButton
+                                config={{
+                                    UIConfig: {variant: Variant.PRIMARY},
+                                    text: 'Открыть проект'
+                                }}
+                                onClick={submitProjectOpen}/>
+                            <ProjectOpen isOpen={projectOpen} onClose={() => setProjectOpen(false)} /> {}
                         </div>
                     )}
 

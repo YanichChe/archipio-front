@@ -145,7 +145,7 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                         )}
                         <p className="tr">Автор: {login}</p>
                         <p className ="desc">Описание проекта:</p>
-                        <div className="description">
+                        <div className="description" >
                             <textarea name="description" rows={12} onChange={(event) => handleChangeDescription(event, setDescription)}></textarea>
                         </div>
                         {descriptionError && (
