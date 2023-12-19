@@ -12,17 +12,24 @@ import LoginChange from "../changes/login/LoginChange";
 import EmailChange from "../changes/email/EmailChange";
 import PasswordChange from "../changes/password/PasswordChange";
 import ProfileDelete from "../delete/ProfileDelete";
+import PictureService from "../../API/PictureService";
+import PictureChange from "../changes/picture/PictureChange";
 
 const Form = observer(() => {
     const [logoutOpen, setLogoutOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [uuid, setUuid] = useState("");
+    const [picture, setPicture] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [loginChangeOpen, setLoginChangeOpen] = useState(false);
     const [emailChangeOpen, setEmailChangeOpen] = useState(false);
     const [passwordChangeOpen, setPasswordChangeOpen] = useState(false);
+    const [pictureChangeOpen, setPictureChangeOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
+
+
 
 
     const submitLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,6 +44,9 @@ const Form = observer(() => {
                 // Получаем данные пользователя
                 setEmail(response.data.email);
                 setLogin(response.data.login);
+                setUuid(response.data.uuid);
+                const responsePicture = await PictureService.getPicture(uuid);
+                setPicture(responsePicture.data);
                 //setPassword(response.data.password);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
@@ -64,6 +74,10 @@ const Form = observer(() => {
         e.preventDefault();
         setPasswordChangeOpen(true);
     }
+    const submitPictureChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setPictureChangeOpen(true);
+    }
 
     const openDelete = () => {
         setDeleteOpen(true);
@@ -71,13 +85,17 @@ const Form = observer(() => {
 
     return (
         <div className ="">
-            <header className="">
-                <button onClick={submitSidebar}>
+            <header className="headerSettings">
+            </header>
+            <div className="formSettings">
+                <button className="test" onClick={submitSidebar}>
                     <img src={dots}></img>
                 </button>
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-            </header>
-            <div className="formSettings">
+                <p>{picture && <img src={picture} alt="Аватарка" width='50' height='50'/>}
+                    <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitPictureChange}> Изменить</span>
+                </p>
+                <PictureChange isOpen={pictureChangeOpen} onClose={() => setPictureChangeOpen(false)} /> {}
                 <p>Почта: {email}  <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitEmailChange}> Изменить</span>
                 </p>
                 <EmailChange isOpen={emailChangeOpen} onClose={() => setEmailChangeOpen(false)} /> {}
@@ -91,7 +109,7 @@ const Form = observer(() => {
                 <CButton
                     config={{
                         UIConfig: { variant: Variant.PRIMARY },
-                        text: 'Log out'
+                        text: 'Выйти'
                     }}
                     onClick={submitLogout} />
                 <Logout isOpen={logoutOpen} onClose={() => setLogoutOpen(false)} />
