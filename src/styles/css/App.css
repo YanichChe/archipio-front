@@ -333,11 +333,10 @@ aside {
   margin-top: 10px;
 }
 
-.name {
+.nameOpen {
   font-family: "Roboto", sans-serif;
   font-size: 27px;
   margin-top: 10px;
-  transform: translateX(28%);
 }
 
 
