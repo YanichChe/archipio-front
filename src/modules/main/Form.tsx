@@ -15,7 +15,7 @@ import PictureService from "../../API/PictureService";
 import ProjectShow from "../project/show/ProjectShow";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-const projects = [1, 2, 3]; // пример данных для отображения
+const projects = [1, 2, 3];
 
 
 const handleNavigate = () => {
@@ -25,8 +25,8 @@ const handleNavigate = () => {
 const Form = observer(() => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
-    const [projects, setProjects] = React.useState([1, 2, 3]); // начальные данные
-    const [hasMore, setHasMore] = React.useState(true); // флаг, указывающий, есть ли еще данные для отображения
+    const [projects, setProjects] = React.useState([]);
+    const [hasMore, setHasMore] = React.useState(true);
 
 
     useEffect(() => {

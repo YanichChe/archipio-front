@@ -29,8 +29,8 @@ const Form = observer(() => {
     const [projectOpen, setProjectOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("myProjects");
     const [picture, setPicture] = useState(null);
-    const [projects, setProjects] = React.useState([1, 2, 3]); // начальные данные
-    const [hasMore, setHasMore] = React.useState(true); // флаг, указывающий, есть ли еще данные для отображения
+    const [projects, setProjects] = React.useState([]);
+    const [hasMore, setHasMore] = React.useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
