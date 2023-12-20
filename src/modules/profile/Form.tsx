@@ -24,6 +24,7 @@ const Form = observer(() => {
     const [login, setLogin] = useState("");
     const [owner, setOwner] = useState("");
     const [uuid, setUuid] = useState("");
+    const [liked, setLiked] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
     const [projectOpen, setProjectOpen] = useState(false);
@@ -42,6 +43,7 @@ const Form = observer(() => {
                 setPicture(responsePicture.data);
                 const responseProject = await ProjectService.getProject();
                 setOwner(responseProject.data.owner);
+                setLiked(responseProject.data.liked);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -137,8 +139,21 @@ const Form = observer(() => {
 
                     {activeTab === "favoriteProjects" && (
                         <div className="tabcontent">
-                            <ProjectShow/>
-                            <ProjectShow/>
+                            <InfiniteScroll
+                                dataLength={projects.length}
+                                next={fetchMoreData}
+                                hasMore={hasMore}
+                                loader={<h4>Loading...</h4>}
+                            >
+                                {projects.map(project => {
+                                    if (liked) {
+                                        return <ProjectShow key={project} />
+                                    } else {
+                                        return null;
+                                    }
+                                })}
+
+                            </InfiniteScroll>
                         </div>
                     )}
             </main>
