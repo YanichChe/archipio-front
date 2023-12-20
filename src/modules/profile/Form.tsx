@@ -13,6 +13,8 @@ import ProjectShow from "../project/show/ProjectShow";
 
 // @ts-ignore
 import pic from "../../assets/mileycyrus.jpeg";
+import ProjectService from "../../API/ProjectService";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -20,12 +22,15 @@ const handleNavigate = () => {
 
 const Form = observer(() => {
     const [login, setLogin] = useState("");
+    const [owner, setOwner] = useState("");
     const [uuid, setUuid] = useState("");
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
     const [projectOpen, setProjectOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("myProjects");
     const [picture, setPicture] = useState(null);
+    const [projects, setProjects] = React.useState([1, 2, 3]); // начальные данные
+    const [hasMore, setHasMore] = React.useState(true); // флаг, указывающий, есть ли еще данные для отображения
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,6 +40,8 @@ const Form = observer(() => {
                 setUuid(responseProfile.data.uuid);
                 const responsePicture = await PictureService.getPicture(uuid);
                 setPicture(responsePicture.data);
+                const responseProject = await ProjectService.getProject();
+                setOwner(responseProject.data.owner);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -59,6 +66,12 @@ const Form = observer(() => {
     const openTab = (tabName: React.SetStateAction<string>) => {
         setActiveTab(tabName);
     };
+
+    const fetchMoreData = () => {
+        if (projects.length >= 10)
+            setHasMore(false);
+        return;
+    }
 
     return (
 
@@ -104,8 +117,21 @@ const Form = observer(() => {
 
                     {activeTab === "myProjects" && (
                         <div className="tabcontent">
-                            <ProjectShow/>
-                            <ProjectShow/>
+                            <InfiniteScroll
+                                dataLength={projects.length}
+                                next={fetchMoreData}
+                                hasMore={hasMore}
+                                loader={<h4>Loading...</h4>}
+                            >
+                                {projects.map(project => {
+                                    if (owner === login) {
+                                        return <ProjectShow key={project} />
+                                    } else {
+                                        return null;
+                                    }
+                                })}
+
+                            </InfiniteScroll>
                         </div>
                     )}
 
