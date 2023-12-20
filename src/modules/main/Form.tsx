@@ -13,6 +13,10 @@ import ProfileService from "../../API/ProfileService";
 import ProjectCreate from "../project/create/ProjectCreate";
 import PictureService from "../../API/PictureService";
 import ProjectShow from "../project/show/ProjectShow";
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+const projects = [1, 2, 3]; // пример данных для отображения
+
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -21,6 +25,9 @@ const handleNavigate = () => {
 const Form = observer(() => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
+    const [projects, setProjects] = React.useState([1, 2, 3]); // начальные данные
+    const [hasMore, setHasMore] = React.useState(true); // флаг, указывающий, есть ли еще данные для отображения
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,7 +49,13 @@ const Form = observer(() => {
         setProjectCreateOpen(true);
     }
 
-    return (
+    const fetchMoreData = () => {
+        if (projects.length >= 10)
+            setHasMore(false);
+            return;
+    }
+
+        return (
 
         <div className="background">
             <header>
@@ -62,8 +75,18 @@ const Form = observer(() => {
                 </form>
             </nav>
             <main className="tabcontent">
-                <ProjectShow/>
-                <ProjectShow/>
+                <InfiniteScroll
+                    dataLength={projects.length}
+                    next={fetchMoreData}
+                    hasMore={hasMore}
+                    loader={<h4>Loading...</h4>}
+                >
+                    {projects.map((project) => (
+                        <ProjectShow key={project} />
+                    ))}
+                </InfiniteScroll>
+
+
 
             </main>
 
