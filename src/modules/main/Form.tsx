@@ -15,8 +15,6 @@ import PictureService from "../../API/PictureService";
 import ProjectShow from "../project/show/ProjectShow";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-const projects = [1, 2, 3];
-
 
 const handleNavigate = () => {
     window.location.href = "/settings";
