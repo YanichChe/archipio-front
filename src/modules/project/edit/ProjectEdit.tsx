@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import validate from "./ProjectCreateValidationRules";
+import validate from "./ProjectEditValidationRules";
 import AvatarEditor from "react-avatar-editor";
 import ProfileService from "../../../API/ProfileService";
-import AuthService from "../../../services/AuthService";
 import { Variant } from "../../../styles/ts/types";
 import { CButton } from "../../../components/button/CButton";
 import ProjectService from "../../../API/ProjectService";
+import PictureService from "../../../API/PictureService";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const ProjectEdit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [image, setImage] = useState(null);
     const [editor, setEditor] = useState<AvatarEditor | null>(null);
     const [editedImage, setEditedImage] = useState<string | null>(null);
@@ -26,12 +26,23 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [tagsError, setTagsError] = useState("");
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState('');
+    const [uuid, setUuid] = useState("");
+    const [picture, setPicture] = useState(null);
+    const [owner, setOwner] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await ProfileService.getProfile();
                 setLogin(response.data.login);
+                const responseProject = await ProjectService.getProject();
+                setUuid(responseProject.data.uuid);
+                setName(responseProject.data.name);
+                setDescription(responseProject.data.description);
+                setOwner(responseProject.data.owner);
+                setTags(responseProject.data.tags);
+                const responsePicture = await PictureService.getPicture(uuid);
+                setPicture(responsePicture.data.picture);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -86,20 +97,9 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     const submit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-      
         setNameError(validate(name, description, tags).name);
         setDescriptionError(validate(name, description, tags).description);
         setTagsError(validate(name, description, tags).tags);
-
-        let uuid = '';
-        ProjectService.uploadFile(image, name).then(response => {
-            uuid = response.data.uuid;
-            console.log(uuid);
-        })
-
-        ProjectService.createProject(name, description, tags, null, uuid, type)
-            .then(r => console.log('save project'))
-            .catch(error => { console.log(error)})
     }
 
     const handleAddTag = () => {
@@ -109,6 +109,7 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             setNewTag('');
         }
     };
+
 
     const handleTagKeyPress = (event: { key: string; }) => {
         if (event.key === 'Enter') {
@@ -129,7 +130,6 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         setTags(newTags);
     };
 
-
     if (!isOpen) {
         return null;
     }
@@ -145,7 +145,7 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             ref={(e) => setEditor(e)}
                             image={image}
                             width={520}
-                            height={620}
+                            height={520}
                             border={0}
                             color={[255, 255, 255, 0.6]}
                             scale={1.2}
@@ -158,19 +158,15 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 <main>
                     <div className="project-info">
                         <div className="name">
-                            <input type="text" placeholder="Название проекта"
-                                   onChange={(event) => handleChange(event, setName)} />
+                            <input type="text" placeholder="Название проекта" value={name} onChange={(event) => handleChange(event, setName)} />
                         </div>
                         {nameError && (
                             <p className="danger">{nameError}</p>
                         )}
-                        <p className="tr">Автор: {login}</p>
+                        <p className="tr">Автор: {owner}</p>
                         <p className ="desc">Описание проекта:</p>
-
-                        <div className="description">
-                            <textarea name="description" rows={12}
-                                      onChange={(event) => handleChangeDescription(event, setDescription)}></textarea>
-
+                        <div className="description" >
+                            <textarea name="description" rows={12} value={description} onChange={(event) => handleChangeDescription(event, setDescription)}></textarea>
                         </div>
                         {descriptionError && (
                             <p className="danger">{descriptionError}</p>
@@ -247,4 +243,4 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
 };
 
-export default ProjectCreate;
+export default ProjectEdit;

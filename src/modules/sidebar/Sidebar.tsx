@@ -25,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 <span className="close" onClick={onClose}>&times;</span>
                 <h2><img src={icon} width ="150" height="150"></img> <br/>
                     <a href="../user">Аккаунт</a> <br/>
-                Главная</h2>
+                    <a href="../archipio">Главная</a> <br/></h2>
                 <footer>
                     <p className="message" onClick={openModal}>ВЫХОД</p>
                 </footer>

@@ -3,12 +3,18 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { CButton } from "../../components/button/CButton";
 import { Variant } from "../../styles/ts/types";
-import AuthService from "../../services/AuthService";
 // @ts-ignore
 import dots from "../../assets/2.png"
 import Sidebar from "../sidebar/Sidebar";
 import ProfileService from "../../API/ProfileService";
 import ProjectCreate from "../project/create/ProjectCreate";
+import PictureService from "../../API/PictureService";
+import ProjectShow from "../project/show/ProjectShow";
+
+// @ts-ignore
+import pic from "../../assets/mileycyrus.jpeg";
+import ProjectService from "../../API/ProjectService";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -16,16 +22,28 @@ const handleNavigate = () => {
 
 const Form = observer(() => {
     const [login, setLogin] = useState("");
+    const [owner, setOwner] = useState("");
+    const [uuid, setUuid] = useState("");
+    const [liked, setLiked] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
+    const [projectOpen, setProjectOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("myProjects");
-
+    const [picture, setPicture] = useState(null);
+    const [projects, setProjects] = React.useState([]);
+    const [hasMore, setHasMore] = React.useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await ProfileService.getProfile();
-                setLogin(response.data.login);
+                const responseProfile = await ProfileService.getProfile();
+                setLogin(responseProfile.data.login);
+                setUuid(responseProfile.data.uuid);
+                const responsePicture = await PictureService.getPicture(uuid);
+                setPicture(responsePicture.data);
+                const responseProject = await ProjectService.getProject();
+                setOwner(responseProject.data.owner);
+                setLiked(responseProject.data.liked);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -42,26 +60,38 @@ const Form = observer(() => {
         setProjectCreateOpen(true);
     }
 
+    const submitProjectOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setProjectOpen(true);
+    }
+
     const openTab = (tabName: React.SetStateAction<string>) => {
         setActiveTab(tabName);
     };
+
+    const fetchMoreData = () => {
+        if (projects.length >= 10)
+            setHasMore(false);
+        return;
+    }
 
     return (
 
         <div className="background">
             <header>
                 <button onClick={submitSidebar}>
-                    <img src={dots}></img>
+                    <img className="dots" src={dots}></img>
                 </button>
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
             </header>
             <main className ="profileMain">
+                <p>{picture && <img src={picture} alt="Аватарка" width='50' height='50'/>}</p>
                 <p>@{login}</p>
                 <p>
                     <CButton
                     config={{
                         UIConfig: {variant: Variant.PRIMARY},
-                        text: 'Изменить данные'
+                        text: 'Настройки'
                     }}
                     onClick={handleNavigate}/>
                 <CButton
@@ -89,13 +119,41 @@ const Form = observer(() => {
 
                     {activeTab === "myProjects" && (
                         <div className="tabcontent">
-                            <h1>дима</h1>
+                            <InfiniteScroll
+                                dataLength={projects.length}
+                                next={fetchMoreData}
+                                hasMore={hasMore}
+                                loader={<h4>Loading...</h4>}
+                            >
+                                {projects.map(project => {
+                                    if (owner === login) {
+                                        return <ProjectShow key={project} />
+                                    } else {
+                                        return null;
+                                    }
+                                })}
+
+                            </InfiniteScroll>
                         </div>
                     )}
 
                     {activeTab === "favoriteProjects" && (
                         <div className="tabcontent">
-                            <h1>яна</h1>
+                            <InfiniteScroll
+                                dataLength={projects.length}
+                                next={fetchMoreData}
+                                hasMore={hasMore}
+                                loader={<h4>Loading...</h4>}
+                            >
+                                {projects.map(project => {
+                                    if (liked) {
+                                        return <ProjectShow key={project} />
+                                    } else {
+                                        return null;
+                                    }
+                                })}
+
+                            </InfiniteScroll>
                         </div>
                     )}
             </main>
