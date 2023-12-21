@@ -92,7 +92,7 @@ const Form = observer(() => {
                     <img src={dots}></img>
                 </button>
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-                <p>{picture && <img src={picture} alt="Аватарка" width='50' height='50'/>}
+                <p>{picture && <img className="avatar" src={picture} alt="Аватарка" width='50' height='50'/>}
                     <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitPictureChange}> Изменить</span>
                 </p>
                 <PictureChange isOpen={pictureChangeOpen} onClose={() => setPictureChangeOpen(false)} /> {}

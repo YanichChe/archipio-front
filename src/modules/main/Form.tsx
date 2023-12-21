@@ -77,7 +77,7 @@ const Form = observer(() => {
                     dataLength={projects.length}
                     next={fetchMoreData}
                     hasMore={hasMore}
-                    loader={<h4>Loading...</h4>}
+                    loader={""}
                 >
                     {projects.map((project) => (
                         <ProjectShow key={project} />

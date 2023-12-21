@@ -85,7 +85,7 @@ const Form = observer(() => {
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
             </header>
             <main className ="profileMain">
-                <p>{picture && <img src={picture} alt="Аватарка" width='50' height='50'/>}</p>
+                <p>{picture && <img className="avatar" src={picture} alt="Аватарка" width='50' height='50'/>}</p>
                 <p>@{login}</p>
                 <p>
                     <CButton

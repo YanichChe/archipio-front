@@ -573,3 +573,7 @@ button img{
   color: #7b8285;
   transform: translateX(1%);
 }
+
+.avatar{
+  border-radius: 50%;
+}
