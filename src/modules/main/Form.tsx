@@ -14,6 +14,8 @@ import ProjectCreate from "../project/create/ProjectCreate";
 import PictureService from "../../API/PictureService";
 import ProjectShow from "../project/show/ProjectShow";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import axios from "axios";
+import {authStore} from "../../store/AuthStore";
 
 const handleNavigate = () => {
     window.location.href = "/settings";
@@ -22,13 +24,21 @@ const handleNavigate = () => {
 const Form = observer(() => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [projectCreateOpen, setProjectCreateOpen] = useState(false);
-    const [projects, setProjects] = React.useState([]);
+    const [projects, setProjects] = React.useState<any[]>([]);
     const [hasMore, setHasMore] = React.useState(true);
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const response = await axios.get( 'http://localhost:8080/projects/get-all-public-projects', {
+                    headers: {
+                        'Authorization': 'Bearer ' + authStore.accessToken
+                    }
+                });
+                const data = response.data;
+
+                setProjects(prevProjects => [...prevProjects, ...data]);
 
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
