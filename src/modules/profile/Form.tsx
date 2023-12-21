@@ -128,9 +128,9 @@ const Form = observer(() => {
                                 hasMore={hasMore}
                                 loader={<h4>Loading...</h4>}
                             >
-                                {projects.map(project => {
+                                {projects.map((project) => {
                                     // @ts-ignore
-                                    return <ProjectShow key={project.title} />
+                                    return <ProjectShow project={project} />
                                 })}
 
                             </InfiniteScroll>
@@ -147,7 +147,7 @@ const Form = observer(() => {
                             >
                                 {projects.map(project => {
                                     if (liked) {
-                                        return <ProjectShow key={project} />
+                                        return <ProjectShow project={project} />
                                     } else {
                                         return null;
                                     }

@@ -90,15 +90,11 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         setDescriptionError(validate(name, description, tags).description);
         setTagsError(validate(name, description, tags).tags);
 
-        let uuid = '';
-        ProjectService.uploadFile(image, name).then(response => {
-            uuid = response.data.uuid;
-            console.log(uuid);
+        ProjectService.uploadFile(image).then(response => {
+            ProjectService.createProject(name, description, tags, null, response.data.uuid, type)
+                .then(r => console.log('save project'))
+                .catch(error => { console.log(error)})
         })
-
-        ProjectService.createProject(name, description, tags, null, uuid, type)
-            .then(r => console.log('save project'))
-            .catch(error => { console.log(error)})
     }
 
     const handleAddTag = () => {
@@ -127,7 +123,6 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         newTags.splice(index, 1);
         setTags(newTags);
     };
-
 
     if (!isOpen) {
         return null;

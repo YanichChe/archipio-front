@@ -2,8 +2,9 @@ import axios from "axios";
 import { authStore } from "../store/AuthStore";
 
 export default class ProjectService {
-    static async createProject(title, description, tags, files, mainImage, visibility) {
-        return await axios.post('http://localhost:8080/projects/create-project', {
+    static  createProject(title, description, tags, files, mainImage, visibility) {
+        console.log(mainImage);
+        return  axios.post('http://localhost:8080/projects/create-project', {
                 title: title,
                 description: description,
                 tags: tags,
@@ -18,14 +19,13 @@ export default class ProjectService {
         )
     }
 
-    static async uploadFile(mainImage , project) {
+    static uploadFile(mainImage) {
 
         const url =
             "http://localhost:8080/files/upload"
 
-        return await axios.post(url, {
+        return  axios.post(url, {
             file: mainImage,
-            project: project
             }, {
                 headers: {
                     'Authorization': 'Bearer ' + authStore.accessToken,

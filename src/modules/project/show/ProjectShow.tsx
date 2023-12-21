@@ -8,7 +8,8 @@ import { observer } from "mobx-react";
 import pic from "../../../assets/mileycyrus.jpeg";
 import ProjectOpen from "../open/ProjectOpen";
 
-const ProjectShow = observer((props: { key: string; }) => {
+const ProjectShow = observer((props:
+                                  { project: { mainImage: React.SetStateAction<string>; name: React.SetStateAction<string>; description: React.SetStateAction<string>; owner: React.SetStateAction<string>; tags: React.SetStateAction<never[]>; }}) => {
     const [uuid, setUuid] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -20,22 +21,21 @@ const ProjectShow = observer((props: { key: string; }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const responseProject = await ProjectService.getProject('Пример2');
-                setUuid(responseProject.data.mainImage);
-                setName(responseProject.data.name);
-                setDescription(responseProject.data.description);
-                setOwner(responseProject.data.owner);
-                setTags(responseProject.data.tags);
+                setUuid(props.project.mainImage);
+                console.log("!!!" + props.project.mainImage);
+                setName(props.project.name);
+                setDescription(props.project.description);
+                setOwner(props.project.owner);
+                setTags(props.project.tags);
 
-                console.log(responseProject.data.mainImage);
-                const responsePicture = await PictureService.getPicture(responseProject.data.mainImage);
+                const responsePicture = await PictureService.getPicture(props.project.mainImage);
                 setPicture(responsePicture.data);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
         };
         fetchData().then(r => console.log('добавить обработку ошибок'));
-    }, [props.key]);
+    }, [props.project]);
 
     const submitProjectOpen = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -51,7 +51,7 @@ const ProjectShow = observer((props: { key: string; }) => {
                 <div className="projectShowName" onClick={submitProjectOpen}>
                 {name}
             </div>
-                <ProjectOpen isOpen={projectOpen} onClose={() => setProjectOpen(false)} /> {}
+
             <div className="projectShowOwner">
                 Автор: {owner}
             </div>

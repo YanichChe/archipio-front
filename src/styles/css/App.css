@@ -395,9 +395,10 @@ aside {
 }
 
 .tag {
-  margin-right: 10px; /* добавляйте отступы между тегами по вашему желанию */
+  margin-right: 10px;
   background-color: #FDA20B;
   border-radius: 2px;
+  width: fit-content;
 }
 
 .tab {

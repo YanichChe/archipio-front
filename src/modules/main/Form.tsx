@@ -89,7 +89,7 @@ const Form = observer(() => {
                     loader={<h4>Loading...</h4>}
                 >
                     {projects.map((project) => (
-                        <ProjectShow key={project} />
+                        <ProjectShow project={project} />
                     ))}
                 </InfiniteScroll>
 
