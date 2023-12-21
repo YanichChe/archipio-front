@@ -7,12 +7,29 @@ export default class ProjectService {
                 title: title,
                 description: description,
                 tags: tags,
-                files: files,
                 mainImage: mainImage,
-                visibility: visibility
+                files: files,
+                visibility: visibility !== 'private'
             }, {
                 headers: {
-                    'Authorization': 'Bearer ' + authStore.accessToken
+                    'Authorization': 'Bearer ' + authStore.accessToken,
+                }
+            }
+        )
+    }
+
+    static async uploadFile(mainImage , project) {
+
+        const url =
+            "http://localhost:8080/files/upload"
+
+        return await axios.post(url, {
+            file: mainImage,
+            project: project
+            }, {
+                headers: {
+                    'Authorization': 'Bearer ' + authStore.accessToken,
+                    'content-type': 'multipart/form-data'
                 }
             }
         )
@@ -36,7 +53,8 @@ export default class ProjectService {
                 visibility: visibility
             }, {
                 headers: {
-                    'Authorization': 'Bearer ' + authStore.accessToken
+                    'Authorization': 'Bearer ' + authStore.accessToken,
+                    "Content-Type": "multipart/form-data"
                 }
             }
         )

@@ -5,6 +5,7 @@ import ProfileService from "../../../API/ProfileService";
 import AuthService from "../../../services/AuthService";
 import { Variant } from "../../../styles/ts/types";
 import { CButton } from "../../../components/button/CButton";
+import ProjectService from "../../../API/ProjectService";
 
 interface ModalProps {
     isOpen: boolean;
@@ -85,9 +86,20 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     const submit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
+      
         setNameError(validate(name, description, tags).name);
         setDescriptionError(validate(name, description, tags).description);
         setTagsError(validate(name, description, tags).tags);
+
+        let uuid = '';
+        ProjectService.uploadFile(image, name).then(response => {
+            uuid = response.data.uuid;
+            console.log(uuid);
+        })
+
+        ProjectService.createProject(name, description, tags, null, uuid, type)
+            .then(r => console.log('save project'))
+            .catch(error => { console.log(error)})
     }
 
     const handleAddTag = () => {
@@ -97,7 +109,6 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             setNewTag('');
         }
     };
-
 
     const handleTagKeyPress = (event: { key: string; }) => {
         if (event.key === 'Enter') {
@@ -147,15 +158,19 @@ const ProjectCreate: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 <main>
                     <div className="project-info">
                         <div className="name">
-                            <input type="text" placeholder="Название проекта" onChange={(event) => handleChange(event, setName)} />
+                            <input type="text" placeholder="Название проекта"
+                                   onChange={(event) => handleChange(event, setName)} />
                         </div>
                         {nameError && (
                             <p className="danger">{nameError}</p>
                         )}
                         <p className="tr">Автор: {login}</p>
                         <p className ="desc">Описание проекта:</p>
-                        <div className="description" >
-                            <textarea name="description" rows={12} onChange={(event) => handleChangeDescription(event, setDescription)}></textarea>
+
+                        <div className="description">
+                            <textarea name="description" rows={12}
+                                      onChange={(event) => handleChangeDescription(event, setDescription)}></textarea>
+
                         </div>
                         {descriptionError && (
                             <p className="danger">{descriptionError}</p>
