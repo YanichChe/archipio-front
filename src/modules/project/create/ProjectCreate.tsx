@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import validate from "./ProjectCreateValidationRules";
 import AvatarEditor from "react-avatar-editor";
 import ProfileService from "../../../API/ProfileService";
-import AuthService from "../../../services/AuthService";
 import { Variant } from "../../../styles/ts/types";
 import { CButton } from "../../../components/button/CButton";
 import ProjectService from "../../../API/ProjectService";

@@ -21,7 +21,7 @@ const handleNavigate = () => {
 }
 
 const Form = observer(() => {
-    const [login, setLogin] = useState("");
+    const [login, setLogin] = useState();
     const [owner, setOwner] = useState("");
     const [uuid, setUuid] = useState("");
     const [liked, setLiked] = useState(false);
@@ -38,12 +38,15 @@ const Form = observer(() => {
             try {
                 const responseProfile = await ProfileService.getProfile();
                 setLogin(responseProfile.data.login);
-                setUuid(responseProfile.data.uuid);
-                const responsePicture = await PictureService.getPicture(uuid);
+                setUuid(responseProfile.data.mainImage);
+
+                const responsePicture = await PictureService.getPicture(responseProfile.data.mainImage);
                 setPicture(responsePicture.data);
-                const responseProject = await ProjectService.getProject();
-                setOwner(responseProject.data.owner);
-                setLiked(responseProject.data.liked);
+
+                const responseProjects = await  ProjectService.getAllUserProjects(responseProfile.data.login);
+                setProjects(responseProjects.data);
+                console.log(responseProjects.data);
+
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
             }
@@ -85,7 +88,7 @@ const Form = observer(() => {
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> {}
             </header>
             <main className ="profileMain">
-                <p>{picture && <img src={picture} alt="Аватарка" width='50' height='50'/>}</p>
+                <p>{picture && <img src={URL.createObjectURL(picture)} alt="Аватарка" width='50' height='50'/>}</p>
                 <p>@{login}</p>
                 <p>
                     <CButton
@@ -126,11 +129,8 @@ const Form = observer(() => {
                                 loader={<h4>Loading...</h4>}
                             >
                                 {projects.map(project => {
-                                    if (owner === login) {
-                                        return <ProjectShow key={project} />
-                                    } else {
-                                        return null;
-                                    }
+                                    // @ts-ignore
+                                    return <ProjectShow key={project.title} />
                                 })}
 
                             </InfiniteScroll>

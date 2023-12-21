@@ -29,9 +29,6 @@ const Form = observer(() => {
     const [pictureChangeOpen, setPictureChangeOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
 
-
-
-
     const submitLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setLogoutOpen(true);
@@ -44,9 +41,11 @@ const Form = observer(() => {
                 // Получаем данные пользователя
                 setEmail(response.data.email);
                 setLogin(response.data.login);
-                setUuid(response.data.uuid);
-                const responsePicture = await PictureService.getPicture(uuid);
+                setUuid(response.data.mainImage);
+
+                const responsePicture = await PictureService.getPicture(response.data.mainImage);
                 setPicture(responsePicture.data);
+
                 //setPassword(response.data.password);
             } catch (error) {
                 console.error("Ошибка при получении данных пользователя", error);
@@ -92,7 +91,7 @@ const Form = observer(() => {
                     <img src={dots}></img>
                 </button>
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-                <p>{picture && <img src={picture} alt="Аватарка" width='50' height='50'/>}
+                <p>{picture && <img src={URL.createObjectURL(picture)}  alt="Аватарка" width='50' height='50'/>}
                     <span style={{ color: 'orange', cursor: 'pointer' }} onClick={submitPictureChange}> Изменить</span>
                 </p>
                 <PictureChange isOpen={pictureChangeOpen} onClose={() => setPictureChangeOpen(false)} /> {}

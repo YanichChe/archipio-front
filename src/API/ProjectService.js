@@ -35,8 +35,11 @@ export default class ProjectService {
         )
     }
 
-    static async getProject() {
-        return await axios.get('http://localhost:8080/projects/get-full-project', {
+    static async getProject(projectTitle) {
+        return await axios.get(`http://localhost:8080/projects/get-full-project/${projectTitle}`, {
+            params: {
+                projectTitle: projectTitle
+            },
             headers: {
                 'Authorization': 'Bearer ' + authStore.accessToken
             }
@@ -82,10 +85,7 @@ export default class ProjectService {
     }
 
     static async getAllUserProjects(userLogin) {
-        return await axios.get('http://localhost:8080/projects/get-all-public-projects', {
-            params: {
-                userLogin: userLogin,
-            },
+        return await axios.get(`http://localhost:8080/projects/get-all-user-projects/${userLogin}`, {
             headers: {
                 'Authorization': 'Bearer ' + authStore.accessToken
             }

@@ -1,16 +1,10 @@
-import React, { useState}  from "react";
-import { Variant } from "../../../styles/ts/types";
-import { CButton } from "../../../components/button/CButton";
-import AuthService from "../../../services/AuthService";
-import ProfileService from "../../../API/ProfileService";
+import React from "react";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 const PictureChange: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-
-
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, setStateFunction: {
         (value: React.SetStateAction<string>): void;
@@ -42,4 +36,5 @@ const PictureChange: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     );
 };
 
+// @ts-ignore
 export default PictureChange;
